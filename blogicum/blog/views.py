@@ -45,23 +45,39 @@ posts = [
 
 
 def index(request):
-    return render(request,
-                  'blog/index.html',
-                  {'posts_list': posts}
-                  )
+    return render(
+        request,
+        'blog/index.html',
+        {'posts_list': posts}
+    )
 
 
 def post_detail(request, post_id):
-    return render(request,
-                  'blog/detail.html',
-                  {'post': posts[post_id]}
-                  )
+    return render(
+        request,
+        'blog/detail.html',
+        {
+            'post':
+            [
+                post for post in posts
+                if post['id'] == post_id
+            ][0],   # на сколько я понимаю, перебора тут не избежать,
+                    # id приходит из этого же массива, т.е. заведомо существует
+                    # прошу подсказать более достойный способ извлечения ID
+        }
+    )
 
 
 def category_posts(request, category_slug):
-    return render(request,
-                  'blog/category.html',
-                  {'posts_by_category': [post for post in posts
-                                         if post['category'] == category_slug],
-                   'title_category': category_slug}
-                  )
+    return render(
+        request,
+        'blog/category.html',
+        {
+            'posts_by_category':
+            [
+                post for post in posts
+                if post['category'] == category_slug
+            ],
+            'title_category': category_slug
+        }
+    )
