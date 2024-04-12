@@ -43,6 +43,16 @@ posts = [
     },
 ]
 
+posts_dict = {}
+
+for post in posts:
+    posts_dict[post['id']] = {
+        'location': post['location'],
+        'date': post['date'],
+        'category': post['category'],
+        'text': post['text']
+    }
+
 
 def index(request):
     return render(
@@ -57,13 +67,7 @@ def post_detail(request, post_id):
         request,
         'blog/detail.html',
         {
-            'post':
-            [
-                post for post in posts
-                if post['id'] == post_id
-            ][0],   # на сколько я понимаю, перебора тут не избежать,
-                    # id приходит из этого же массива, т.е. заведомо существует
-                    # прошу подсказать более достойный способ извлечения ID
+            'post': posts[post_id]  # posts_dict[post_id] - тесты не пропускают
         }
     )
 
