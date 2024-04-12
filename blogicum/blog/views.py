@@ -46,12 +46,7 @@ posts = [
 posts_dict = {}
 
 for post in posts:
-    posts_dict[post['id']] = {
-        'location': post['location'],
-        'date': post['date'],
-        'category': post['category'],
-        'text': post['text']
-    }
+    posts_dict[post['id']] = post
 
 
 def index(request):
@@ -67,7 +62,7 @@ def post_detail(request, post_id):
         request,
         'blog/detail.html',
         {
-            'post': posts[post_id]  # posts_dict[post_id] - тесты не пропускают
+            'post': posts_dict[post_id]
         }
     )
 
