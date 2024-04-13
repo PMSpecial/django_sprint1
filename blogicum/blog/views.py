@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import Http404
 
 posts = [
     {
@@ -58,13 +59,14 @@ def index(request):
 
 
 def post_detail(request, post_id):
-    return render(
-        request,
-        'blog/detail.html',
-        {
-            'post': posts_dict[post_id]
-        }
-    )
+    if posts_dict[post_id] is None:
+        raise Http404("Post does not exist")  
+    else:
+        return render(
+            request,
+            'blog/detail.html',
+            {'post': posts_dict[post_id]}
+        )
 
 
 def category_posts(request, category_slug):
