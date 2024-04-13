@@ -59,8 +59,8 @@ def index(request):
 
 
 def post_detail(request, post_id):
-    if posts_dict[post_id] is None:
-        raise Http404("Post does not exist")
+    if posts_dict.get(post_id) is None:
+        raise Http404(f'Post {post_id} does not exist')
     else:
         return render(
             request,
